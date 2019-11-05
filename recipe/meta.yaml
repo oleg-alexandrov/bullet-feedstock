@@ -13,9 +13,11 @@ source:
     - pybullet-fixes.patch
     # wont build on linux+win
     - disable-sharedmemory.patch
+    # https://github.com/bulletphysics/bullet3/pull/2232
+    - PR2232.patch
 
 build:
-  number: 1000
+  number: 1001
 
 requirements:
   build:
