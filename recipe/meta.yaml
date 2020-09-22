@@ -1,33 +1,35 @@
-{% set pypi_name = "pybullet" %}
-{% set name = "bullet" %}
-{% set version = "3.0.3" %}
+{% set version = "2.88" %}
 
 package:
-  name: {{ name|lower }}
+  name: bullet
   version: {{ version }}
 
 source:
-  fn: {{ pypi_name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ pypi_name[0] }}/{{ pypi_name }}/{{ pypi_name }}-{{ version }}.tar.gz
-  sha256: b2457214fc54932a6bfba62c9e4b781840aed799734187e147df33a83b472b7c
+  fn: bullet3-{{ version }}.tar.gz
+  url: https://github.com/bulletphysics/bullet3/archive/{{ version }}.tar.gz
+  sha256: 21c135775527754fc2929db1db5144e92ad0218ae72840a9f162acb467a7bbf9
+  patches:
+    # https://github.com/bulletphysics/bullet3/pull/2055
+    - pybullet-fixes.patch
+    # wont build on linux+win
+    - disable-sharedmemory.patch
+    # https://github.com/bulletphysics/bullet3/pull/2232
+    - PR2232.patch
 
 build:
-  script: {{ PYTHON }} -m pip install . --ignore-installed --no-cache-dir -vvv
-  number: 0
+  number: 1001
 
 requirements:
   build:
+    - cmake
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake
+    - msinttypes  # [win and py27]
   host:
     - python
-    - pip
-    - setuptools
-    - numpy >=1.11
-    - wheel
+    - numpy
+    - msinttypes  # [win and py27]
   run:
-    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx]
     - python
     - {{ pin_compatible('numpy') }}
 
@@ -37,7 +39,7 @@ test:
 
 about:
   home:  http://bulletphysics.org
-  license: Zlib
+  license: zlib
   license_file: LICENSE.txt
   summary: Bullet Physics SDK real-time collision detection
     and multi-physics simulation for VR, games, visual effects, robotics, machine learning etc.
@@ -45,4 +47,3 @@ about:
 extra:
   recipe-maintainers:
     - xantares
-    - gonzalocasas
