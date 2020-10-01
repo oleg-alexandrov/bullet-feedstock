@@ -14,10 +14,12 @@ source:
 
 build:
   number: 0
+  skip: true  # [ppc64le]
 
 requirements:
   build:
     - cmake
+    - make  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
