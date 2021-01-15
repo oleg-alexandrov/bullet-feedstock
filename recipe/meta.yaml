@@ -13,8 +13,7 @@ source:
     - disable-sharedmemory.patch
 
 build:
-  number: 1
-  skip: true  # [ppc64le]
+  number: 2
 
 requirements:
   build:
