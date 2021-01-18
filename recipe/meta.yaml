@@ -11,10 +11,11 @@ source:
   patches:
     # linux: examples/ThirdPartyLibs/openvr/bin/linux64/libopenvr_api.so: undefined reference to `memcpy@GLIBC_2.14'
     - disable-sharedmemory.patch
+    # On ppc64le compilation of Bullet3OpenCL fails (https://github.com/conda-forge/bullet-feedstock/issues/24)
+    - disable-bullet3opencl.patch  # [ppc64le]
 
 build:
-  number: 1
-  skip: true  # [ppc64le]
+  number: 2
 
 requirements:
   build:
@@ -32,6 +33,7 @@ requirements:
 test:
   imports:
     - pybullet
+
 
 about:
   home:  http://bulletphysics.org
