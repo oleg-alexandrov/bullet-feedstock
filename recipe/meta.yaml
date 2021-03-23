@@ -51,6 +51,7 @@ outputs:
       host:
         - '{{ pin_compatible("bullet-cpp", exact=True) }}'
         - python
+        - pip
         - numpy
       run:
         - '{{ pin_compatible("bullet-cpp", exact=True) }}'
