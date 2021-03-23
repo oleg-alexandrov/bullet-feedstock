@@ -18,6 +18,9 @@ cmake .. \
 
 ninja install
 
-install -Dm755 examples/ExampleBrowser/App_ExampleBrowser $PREFIX/bin/BulletExampleBrowser
+if [[ $target_platform =~ linux.* ]]; then
+  install -Dm755 examples/ExampleBrowser/App_ExampleBrowser $PREFIX/bin/BulletExampleBrowser
+fi
+
 mkdir -p $PREFIX/opt/bullet
 cp -r data $PREFIX/opt/bullet/

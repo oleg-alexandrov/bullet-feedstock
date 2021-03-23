@@ -28,10 +28,10 @@ ninja install
 
 if errorlevel 1 exit 1
 
-copy examples\ExampleBrowser\App_ExampleBrowser %PREFIX%\Library\bin\BulletExampleBrowser
-if errorlevel 1 exit 1
+rem copy examples\ExampleBrowser\App_ExampleBrowser %PREFIX%\Library\bin\BulletExampleBrowser
+rem if errorlevel 1 exit 1
 
-mkdir %LIBRARY_PREFIX%\opt\bullet
-if errorlevel 1 exit 1
-xcopy /s data %LIBRARY_PREFIX%\opt\bullet
-if errorlevel 1 exit 1
+rem mkdir %LIBRARY_PREFIX%\opt\bullet
+rem if errorlevel 1 exit 1
+rem xcopy /s data %LIBRARY_PREFIX%\opt\bullet
+rem if errorlevel 1 exit 1
