@@ -13,60 +13,60 @@ source:
 
 build:
   number: 0
-  run_exports:
-    - "{{ pin_subpackage('bullet-cpp', max_pin='x.x.x' )}}"
 
 outputs:
-- name: bullet-cpp
-  script: build_cpp.sh  # [unix]
-  script: build_cpp.bat  # [unix]
-  build:
-    run_exports:
-      - "{{ pin_subpackage('bullet-cpp', max_pin='x.x.x' )}}"
-
-  requirements:
+  - name: bullet-cpp
+    script: build_cpp.sh    # [unix]
+    script: bld_cpp.bat     # [win]
     build:
-      - cmake
-      - ninja
-      - '{{ compiler("c") }}'
-      - '{{ compiler("cxx") }}'
-      - "{{ cdt('mesa-libgl-devel') }}"  # [linux]
-      - "{{ cdt('mesa-dri-drivers') }}"  # [linux]
-    host:
-      - sel(unix): "xorg-libx11"    # [unix]
-      - sel(unix): "xorg-libxext"   # [unix]
-      - python
-      - numpy
-    run:
-      - sel(unix): "xorg-libx11"   # [unix]
-      - sel(unix): "xorg-libxext"  # [unix]
+      run_exports:
+        - "{{ pin_subpackage('bullet-cpp', max_pin='x.x.x' )}}"
 
-- name: pybullet
-  script: build_py.sh  # [unix]
-  script: build_py.bat  # [win]
-  requirements:
-    build:
-      - cmake
-      - ninja
-      - '{{ compiler("c") }}'
-      - '{{ compiler("cxx") }}'
-    host:
-      - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
-      - python
-      - numpy
-    run:
-      - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
-      - python
-      - numpy
-  test:
-    imports:
-      - pybullet
+    requirements:
+      build:
+        - cmake
+        - ninja
+        - '{{ compiler("c") }}'
+        - '{{ compiler("cxx") }}'
+        - "{{ cdt('mesa-libgl-devel') }}"  # [linux]
+        - "{{ cdt('mesa-dri-drivers') }}"  # [linux]
+      host:
+        - xorg-libx11    # [unix]
+        - xorg-libxext   # [unix]
+        - python
+        - numpy
+      run:
+        - xorg-libx11   # [unix]
+        - xorg-libxext  # [unix]
 
-- name: bullet
-  requirements:
-    run:
-      - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
-      - '{{ pin_subpackage("pybullet", exact=True) }}'
+  - name: pybullet
+    script: build_py.sh   # [unix]
+    script: bld_py.bat    # [win]
+    requirements:
+      build:
+        - cmake
+        - ninja
+        - '{{ compiler("c") }}'
+        - '{{ compiler("cxx") }}'
+      host:
+        - '{{ pin_compatible("bullet-cpp", exact=True) }}'
+        - python
+        - numpy
+      run:
+        - '{{ pin_compatible("bullet-cpp", exact=True) }}'
+        - python
+        - numpy
+    test:
+      imports:
+        - pybullet
+
+  - name: bullet
+    script:
+      - echo "Building"
+    requirements:
+      run:
+        - '{{ pin_compatible("bullet-cpp", exact=True) }}'
+        - '{{ pin_compatible("pybullet", exact=True) }}'
 
 about:
   home: http://bulletphysics.org
