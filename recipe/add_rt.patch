@@ -1,0 +1,31 @@
+diff --git a/examples/RobotSimulator/CMakeLists.txt b/examples/RobotSimulator/CMakeLists.txt
+index b2d6c2412..7fc195e53 100644
+--- a/examples/RobotSimulator/CMakeLists.txt
++++ b/examples/RobotSimulator/CMakeLists.txt
+@@ -71,7 +71,7 @@ SET_TARGET_PROPERTIES(App_RobotSimulator PROPERTIES DEBUG_POSTFIX "_d")
+ SET_TARGET_PROPERTIES(App_RobotSimulator PROPERTIES COMPILE_DEFINITIONS "B3_USE_ROBOTSIM_GUI")
+ 
+ 
+-TARGET_LINK_LIBRARIES(App_RobotSimulator BulletRobotics BulletExampleBrowserLib BulletFileLoader BulletWorldImporter BulletSoftBody BulletDynamics BulletCollision BulletInverseDynamicsUtils BulletInverseDynamics LinearMath OpenGLWindow gwen Bullet3Common)
++TARGET_LINK_LIBRARIES(App_RobotSimulator BulletRobotics BulletExampleBrowserLib BulletFileLoader BulletWorldImporter BulletSoftBody BulletDynamics BulletCollision BulletInverseDynamicsUtils BulletInverseDynamics LinearMath OpenGLWindow gwen Bullet3Common rt)
+ 
+ IF(WIN32)
+ 	IF(BUILD_ENET OR BUILD_CLSOCKET)
+@@ -102,7 +102,7 @@ SET_TARGET_PROPERTIES(App_RobotSimulator_NoGUI PROPERTIES VERSION ${BULLET_VERSI
+ SET_TARGET_PROPERTIES(App_RobotSimulator_NoGUI PROPERTIES DEBUG_POSTFIX "_d")
+ 
+ 
+-TARGET_LINK_LIBRARIES(App_RobotSimulator_NoGUI BulletRobotics BulletFileLoader BulletWorldImporter BulletSoftBody BulletDynamics BulletCollision BulletInverseDynamicsUtils BulletInverseDynamics LinearMath Bullet3Common)
++TARGET_LINK_LIBRARIES(App_RobotSimulator_NoGUI BulletRobotics BulletFileLoader BulletWorldImporter BulletSoftBody BulletDynamics BulletCollision BulletInverseDynamicsUtils BulletInverseDynamics LinearMath Bullet3Common rt)
+ 
+ IF(WIN32)
+ 	IF(BUILD_ENET OR BUILD_CLSOCKET)
+@@ -139,7 +139,7 @@ SET_TARGET_PROPERTIES(App_HelloBulletRobotics PROPERTIES VERSION ${BULLET_VERSIO
+ SET_TARGET_PROPERTIES(App_HelloBulletRobotics PROPERTIES DEBUG_POSTFIX "_d")
+ 
+ 
+-TARGET_LINK_LIBRARIES(App_HelloBulletRobotics BulletRobotics BulletFileLoader BulletWorldImporter BulletSoftBody BulletDynamics BulletCollision BulletInverseDynamicsUtils BulletInverseDynamics LinearMath Bullet3Common)
++TARGET_LINK_LIBRARIES(App_HelloBulletRobotics BulletRobotics BulletFileLoader BulletWorldImporter BulletSoftBody BulletDynamics BulletCollision BulletInverseDynamicsUtils BulletInverseDynamics LinearMath Bullet3Common rt)
+ 
+ IF(WIN32)
+         IF(BUILD_ENET OR BUILD_CLSOCKET)

@@ -9,31 +9,64 @@ source:
   url: https://github.com/bulletphysics/bullet3/archive/{{ version }}.tar.gz
   sha256: f2feef9322329c0571d9066fede2db0ede92b19f7f7fdf54def3b4651f02af03
   patches:
-    # linux: examples/ThirdPartyLibs/openvr/bin/linux64/libopenvr_api.so: undefined reference to `memcpy@GLIBC_2.14'
-    - disable-sharedmemory.patch
-    # On ppc64le compilation of Bullet3OpenCL fails (https://github.com/conda-forge/bullet-feedstock/issues/24)
-    - disable-bullet3opencl.patch  # [ppc64le]
+    - add_rt.patch  # [linux]
 
 build:
   number: 0
+  run_exports:
+    - "{{ pin_subpackage('bullet-cpp', max_pin='x.x.x' )}}"
 
-requirements:
+outputs:
+- name: bullet-cpp
+  script: build_cpp.sh  # [unix]
+  script: build_cpp.bat  # [unix]
   build:
-    - cmake
-    - make  # [unix]
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-  host:
-    - python
-    - numpy
-  run:
-    - python
-    - {{ pin_compatible('numpy') }}
+    run_exports:
+      - "{{ pin_subpackage('bullet-cpp', max_pin='x.x.x' )}}"
 
-test:
-  imports:
-    - pybullet
+  requirements:
+    build:
+      - cmake
+      - ninja
+      - '{{ compiler("c") }}'
+      - '{{ compiler("cxx") }}'
+      - "{{ cdt('mesa-libgl-devel') }}"  # [linux]
+      - "{{ cdt('mesa-dri-drivers') }}"  # [linux]
+    host:
+      - sel(unix): "xorg-libx11"    # [unix]
+      - sel(unix): "xorg-libxext"   # [unix]
+      - python
+      - numpy
+    run:
+      - sel(unix): "xorg-libx11"   # [unix]
+      - sel(unix): "xorg-libxext"  # [unix]
 
+- name: pybullet
+  script: build_py.sh  # [unix]
+  script: build_py.bat  # [win]
+  requirements:
+    build:
+      - cmake
+      - ninja
+      - '{{ compiler("c") }}'
+      - '{{ compiler("cxx") }}'
+    host:
+      - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
+      - python
+      - numpy
+    run:
+      - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
+      - python
+      - numpy
+  test:
+    imports:
+      - pybullet
+
+- name: bullet
+  requirements:
+    run:
+      - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
+      - '{{ pin_subpackage("pybullet", exact=True) }}'
 
 about:
   home: http://bulletphysics.org
@@ -44,3 +77,4 @@ about:
 extra:
   recipe-maintainers:
     - xantares
+    - wolfv
