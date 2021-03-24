@@ -38,6 +38,20 @@ outputs:
       run:
         - xorg-libx11   # [unix]
         - xorg-libxext  # [unix]
+    test:
+      commands:
+        - test -d ${PREFIX}/include/bullet  # [unix]
+        - test -f ${PREFIX}/include/bullet/BulletSoftBody/btSoftBody.h  # [unix]
+        - test -f ${PREFIX}/lib/pkgconfig/bullet.pc  # [unix]
+        - test -f ${PREFIX}/lib/cmake/bullet/BulletConfig.cmake  # [unix]
+        - test -f ${PREFIX}/lib/libBulletExampleBrowserLib${SHLIB_EXT}  # [unix]
+        - test -f ${PREFIX}/lib/libgwen${SHLIB_EXT}  # [unix]
+        - test -f ${PREFIX}/lib/libBussIK${SHLIB_EXT}  # [unix]
+        - test -f ${PREFIX}/lib/libBullet3Dynamics${SHLIB_EXT}  # [unix]
+        - if not exist %LIBRARY_PREFIX%\include\bullet\BulletSoftBody\btSoftBody.h (exit 1)  # [win]
+        - if not exist %LIBRARY_PREFIX%\lib\cmake\bullet\BulletConfig.cmake (exit 1)  # [win]
+        - if not exist %LIBRARY_PREFIX%\lib\BussIK.lib (exit 1)  # [win]
+        - if not exist %LIBRARY_PREFIX%\lib\BulletCollision.lib (exit 1)  # [win]
 
   - name: pybullet
     script: build_py.sh   # [unix]
@@ -66,6 +80,12 @@ outputs:
       run:
         - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
         - '{{ pin_subpackage("pybullet", exact=True) }}'
+    test:
+      imports:
+        - pybullet
+      commands:
+        - test -f ${PREFIX}/include/bullet/BulletSoftBody/btSoftBody.h  # [unix]
+        - if not exist %LIBRARY_PREFIX%\include\bullet\BulletSoftBody\btSoftBody.h (exit 1)  # [win]
 
 about:
   home: http://bulletphysics.org
