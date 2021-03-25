@@ -2,6 +2,15 @@
 
 mkdir build && cd build
 
+if [ ${target_platform} == "linux-ppc64le" ]; then
+  # Disable parallel compilaton (build runs out of memory in Travis)
+  NUM_PARALLEL=-j1
+else
+  IGN_TEST_CMD=
+  NUM_PARALLEL=
+fi
+
+
 cmake .. \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -16,7 +25,7 @@ cmake .. \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SKIP_RPATH=YES
 
-ninja install
+ninja $NUM_PARALLEL install
 
 if [[ $target_platform =~ linux.* ]]; then
   install -Dm755 examples/ExampleBrowser/App_ExampleBrowser $PREFIX/bin/BulletExampleBrowser
