@@ -16,7 +16,7 @@ index 97447c9ecb..8911ec5d11 100644
    cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
    # parallel code
 -  N = 2 * multiprocessing.cpu_count()  # number of parallel compilations
-+  N = 1
++  N = 2
    try:
      # On Unix-like platforms attempt to obtain the total memory in the
      # machine and limit the number of parallel jobs to the num
