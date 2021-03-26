@@ -12,6 +12,9 @@ source:
     - add_rt.patch  # [linux]
     # On ppc64le compilation of Bullet3OpenCL fails (https://github.com/conda-forge/bullet-feedstock/issues/24)
     - disable-bullet3opencl.patch  # [ppc64le]
+    # The setup.py hardcodes a custom logic to decide the number of compilation threads, 
+    # let's override it for memory limited architectures (as of early 2021, travis with ppc64le)
+    - setup-py-single-thread-compilation.patch  # [ppc64le]
 
 build:
   number: 1
