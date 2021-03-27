@@ -1,0 +1,22 @@
+From 98713d73b7a3e630c9cd9c0d7d62de545a762245 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Fri, 26 Mar 2021 08:42:47 +0100
+Subject: [PATCH] setup.py: Only use one thread for building
+
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 97447c9ecb..8911ec5d11 100644
+--- a/setup.py
++++ b/setup.py
+@@ -28,7 +28,7 @@ def parallelCCompile(self,
+       output_dir, macros, include_dirs, sources, depends, extra_postargs)
+   cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
+   # parallel code
+-  N = 2 * multiprocessing.cpu_count()  # number of parallel compilations
++  N = 2
+   try:
+     # On Unix-like platforms attempt to obtain the total memory in the
+     # machine and limit the number of parallel jobs to the num

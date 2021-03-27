@@ -1,0 +1,21 @@
+From e08e8961864c7fc67f175cead9714517d8d9c100 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Thu, 25 Mar 2021 22:57:48 +0100
+Subject: [PATCH] Disable Bullet3OpenCL
+
+---
+ src/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index c30125c539..5726b47f30 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ 
+ IF(BUILD_BULLET3)
+-	SUBDIRS(  Bullet3OpenCL Bullet3Serialize/Bullet2FileLoader Bullet3Dynamics Bullet3Collision Bullet3Geometry )
++	SUBDIRS(Bullet3Serialize/Bullet2FileLoader Bullet3Dynamics Bullet3Collision Bullet3Geometry )
+ ENDIF(BUILD_BULLET3)
+ 
+ 
