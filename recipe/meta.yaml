@@ -1,4 +1,4 @@
-{% set version = "3.09" %}
+{% set version = "3.17" %}
 
 package:
   name: bullet
@@ -7,7 +7,7 @@ package:
 source:
   fn: bullet3-{{ version }}.tar.gz
   url: https://github.com/bulletphysics/bullet3/archive/{{ version }}.tar.gz
-  sha256: f2feef9322329c0571d9066fede2db0ede92b19f7f7fdf54def3b4651f02af03
+  sha256: baa642c906576d4d98d041d0acb80d85dd6eff6e3c16a009b1abf1ccd2bc0a61
   patches:
     - add_rt.patch  # [linux]
     # On ppc64le compilation of Bullet3OpenCL fails (https://github.com/conda-forge/bullet-feedstock/issues/24)
@@ -17,24 +17,24 @@ source:
     - setup-py-single-thread-compilation.patch  # [ppc64le]
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - name: bullet-cpp
-    script: build_cpp.sh    # [unix]
-    script: bld_cpp.bat     # [win]
+    script: build_cpp.sh  # [unix]
+    script: bld_cpp.bat  # [win]
     build:
       run_exports:
-        - "{{ pin_subpackage('bullet-cpp', max_pin='x.x.x') }}"
+        - {{ pin_subpackage('bullet-cpp', max_pin='x.x.x') }}
 
     requirements:
       build:
         - cmake
         - ninja
-        - '{{ compiler("c") }}'
-        - '{{ compiler("cxx") }}'
-        - "{{ cdt('mesa-libgl-devel') }}"  # [linux]
-        - "{{ cdt('mesa-dri-drivers') }}"  # [linux]
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - {{ cdt('mesa-libgl-devel') }}    # [linux]
+        - {{ cdt('mesa-dri-drivers') }}    # [linux]
       host:
         - xorg-libx11    # [unix]
         - xorg-libxext   # [unix]
@@ -59,21 +59,21 @@ outputs:
         - if not exist %LIBRARY_PREFIX%\lib\BulletCollision.lib (exit 1)  # [win]
 
   - name: pybullet
-    script: build_py.sh   # [unix]
-    script: bld_py.bat    # [win]
+    script: build_py.sh  # [unix]
+    script: bld_py.bat  # [win]
     requirements:
       build:
         - cmake
         - ninja
-        - '{{ compiler("c") }}'
-        - '{{ compiler("cxx") }}'
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
       host:
-        - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
+        - {{ pin_subpackage("bullet-cpp", exact=True) }}
         - python
         - pip
         - numpy
       run:
-        - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
+        - {{ pin_subpackage("bullet-cpp", exact=True) }}
         - python
         - numpy
     test:
@@ -83,8 +83,8 @@ outputs:
   - name: bullet
     requirements:
       run:
-        - '{{ pin_subpackage("bullet-cpp", exact=True) }}'
-        - '{{ pin_subpackage("pybullet", exact=True) }}'
+        - {{ pin_subpackage("bullet-cpp", exact=True) }}
+        - {{ pin_subpackage("pybullet", exact=True) }}
     test:
       imports:
         - pybullet
