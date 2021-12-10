@@ -93,6 +93,7 @@ outputs:
         - {{ pin_subpackage("bullet-cpp", exact=True) }}
         - {{ pin_subpackage("pybullet", exact=True) }}
         - python
+        - numpy
     test:
       imports:
         - pybullet
