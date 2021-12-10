@@ -18,7 +18,7 @@ source:
     - fix-find-pythonlibs.patch  # [linux]
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: bullet-cpp
@@ -92,6 +92,7 @@ outputs:
       run:
         - {{ pin_subpackage("bullet-cpp", exact=True) }}
         - {{ pin_subpackage("pybullet", exact=True) }}
+        - python
     test:
       imports:
         - pybullet
