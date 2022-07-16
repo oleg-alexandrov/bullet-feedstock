@@ -16,9 +16,10 @@ source:
     # let's override it for memory limited architectures (as of early 2021, travis with ppc64le)
     - setup-py-single-thread-compilation.patch  # [ppc64le]
     - fix-find-pythonlibs.patch  # [linux]
+    - double-precision-postfix.patch
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: bullet-cpp
