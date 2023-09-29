@@ -1,14 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-mkdir build && cd build
+set -ex
 
-if [ ${target_platform} == "linux-ppc64le" ]; then
+# Delete outdated FindPythonLibs
+rm -f build3/cmake/FindPythonLibs.cmake
+
+mkdir -p build
+pushd build
+
+if [[ "${target_platform}" == "linux-ppc64le" ]]; then
   # Disable parallel compilaton (build runs out of memory in Travis)
   NUM_PARALLEL=-j2
 else
   NUM_PARALLEL=
 fi
-
 
 cmake ${CMAKE_ARGS} .. \
   -GNinja \
@@ -22,7 +27,9 @@ cmake ${CMAKE_ARGS} .. \
   -DBUILD_PYBULLET_NUMPY=ON \
   -DBUILD_OPENGL3_DEMOS=ON \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_SKIP_RPATH=YES
+  -DCMAKE_SKIP_RPATH=YES \
+  -DPython_EXECUTABLE=${PYTHON} \
+  -DPYTHON_INCLUDE_DIRS=${PREFIX}/include/python${PY_VER}
 
 ninja $NUM_PARALLEL install
 
