@@ -29,7 +29,8 @@ cmake ${CMAKE_ARGS} .. \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SKIP_RPATH=YES \
   -DPython_EXECUTABLE=${PYTHON} \
-  -DPYTHON_INCLUDE_DIRS=${PREFIX}/include/python${PY_VER}
+  -DPYTHON_INCLUDE_DIRS=${PREFIX}/include/python${PY_VER} \
+  -DPYTHON_INCLUDE_DIR=${PREFIX}/include/python${PY_VER}
 
 ninja $NUM_PARALLEL install
 
