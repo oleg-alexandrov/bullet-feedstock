@@ -15,6 +15,8 @@ else
   NUM_PARALLEL=
 fi
 
+export PYTHON_INCLUDE_DIR=$PREFIX/include/`ls $PREFIX/include | grep "python\|pypy"`
+
 cmake ${CMAKE_ARGS} .. \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -29,8 +31,8 @@ cmake ${CMAKE_ARGS} .. \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SKIP_RPATH=YES \
   -DPython_EXECUTABLE=${PYTHON} \
-  -DPYTHON_INCLUDE_DIRS=${PREFIX}/include/python${PY_VER} \
-  -DPYTHON_INCLUDE_DIR=${PREFIX}/include/python${PY_VER}
+  -DPYTHON_INCLUDE_DIRS=${PYTHON_INCLUDE_DIR} \
+  -DPYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR}
 
 ninja $NUM_PARALLEL install
 
