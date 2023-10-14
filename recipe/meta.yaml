@@ -19,7 +19,7 @@ source:
     - double-precision-postfix.patch
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: bullet-cpp
@@ -27,7 +27,7 @@ outputs:
     script: bld_cpp.bat  # [win]
     build:
       run_exports:
-        - {{ pin_subpackage('bullet-cpp', max_pin='x.x.x') }}
+        - {{ pin_subpackage('bullet-cpp', max_pin='x.x') }}
 
     requirements:
       build:
