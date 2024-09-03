@@ -81,6 +81,8 @@ outputs:
         - {{ pin_subpackage("bullet-cpp", exact=True) }}
         - python
         - pip
+        - setuptools
+        - wheel
         - numpy
       run:
         - {{ pin_subpackage("bullet-cpp", exact=True) }}
